@@ -653,6 +653,7 @@ function preloadImages() {
 // Функциональность переключения темы
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle ? themeToggle.querySelector('i') : null;
     const body = document.body;
     const navbar = document.querySelector('.navbar');
     
@@ -677,29 +678,56 @@ function initThemeToggle() {
         }
     }
     
+    // Функция для обновления иконки темы
+    function updateThemeIcon(isDarkTheme) {
+        if (!themeIcon) return;
+        
+        if (isDarkTheme) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    }
+    
     // Проверяем сохраненную тему
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    const isDarkTheme = savedTheme === 'dark';
+    
+    if (isDarkTheme) {
         body.classList.add('dark-theme');
         updateNavbarStyle(true);
+        updateThemeIcon(true);
     } else {
+        body.classList.remove('dark-theme');
         updateNavbarStyle(false);
+        updateThemeIcon(false);
     }
     
     // Обработчик клика на кнопку переключения темы
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-theme');
-        const isDarkTheme = body.classList.contains('dark-theme');
-        
-        if (isDarkTheme) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-        
-        // Обновляем стили навигационной панели
-        updateNavbarStyle(isDarkTheme);
-    });
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            console.log('Theme toggle clicked');
+            const newIsDarkTheme = !body.classList.contains('dark-theme');
+            
+            if (newIsDarkTheme) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+                console.log('Dark theme activated');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+                console.log('Light theme activated');
+            }
+            
+            // Обновляем стили и иконку
+            updateNavbarStyle(newIsDarkTheme);
+            updateThemeIcon(newIsDarkTheme);
+        });
+    } else {
+        console.error('Theme toggle button not found!');
+    }
 }
 
 // Инициализация переключения темы при загрузке страницы
