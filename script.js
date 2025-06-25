@@ -652,9 +652,17 @@ function preloadImages() {
 
 // Функциональность переключения темы
 function initThemeToggle() {
+    console.log('Initializing theme toggle');
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
     const navbar = document.querySelector('.navbar');
+    
+    if (!themeToggle) {
+        console.error('Theme toggle button not found!');
+        return;
+    }
+    
+    console.log('Theme toggle button found:', themeToggle);
     
     // Функция для обновления стилей навигационной панели
     function updateNavbarStyle(isDarkTheme) {
@@ -666,6 +674,12 @@ function initThemeToggle() {
                 navbar.style.background = 'rgba(30, 30, 50, 0.95)';
                 navbar.style.boxShadow = 'none';
             }
+            
+            // Обновляем стили для навигационных ссылок
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.style.color = '#b8b8b8';
+            });
         } else {
             if (window.scrollY > 100) {
                 navbar.style.background = 'rgba(255, 255, 255, 0.98)';
@@ -674,6 +688,12 @@ function initThemeToggle() {
                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
                 navbar.style.boxShadow = 'none';
             }
+            
+            // Обновляем стили для навигационных ссылок
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.style.color = '#333';
+            });
         }
     }
     
@@ -681,10 +701,14 @@ function initThemeToggle() {
     function updateThemeIcon(isDarkTheme) {
         if (!themeToggle) return;
         
+        console.log('Updating theme icon, isDarkTheme:', isDarkTheme);
+        
         if (isDarkTheme) {
             themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
+            console.log('Set sun icon');
         } else {
             themeToggle.innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i>';
+            console.log('Set moon icon');
         }
     }
     
@@ -692,43 +716,90 @@ function initThemeToggle() {
     const savedTheme = localStorage.getItem('theme');
     const isDarkTheme = savedTheme === 'dark';
     
+    console.log('In initThemeToggle, saved theme:', savedTheme);
+    console.log('Is dark theme:', isDarkTheme);
+    
+    // Принудительно применяем стили
     if (isDarkTheme) {
         body.classList.add('dark-theme');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        
+        // Принудительно применяем стили темной темы
+        document.body.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+        document.body.style.color = '#e8e8e8';
+        console.log('Applied dark theme styles directly');
+        
         updateNavbarStyle(true);
         updateThemeIcon(true);
     } else {
         body.classList.remove('dark-theme');
+        document.documentElement.setAttribute('data-theme', 'light');
+        
+        // Принудительно применяем стили светлой темы
+        document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+        document.body.style.color = '#2c3e50';
+        console.log('Applied light theme styles directly');
+        
         updateNavbarStyle(false);
         updateThemeIcon(false);
     }
     
     // Обработчик клика на кнопку переключения темы
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            console.log('Theme toggle clicked');
-            const newIsDarkTheme = !body.classList.contains('dark-theme');
+    themeToggle.addEventListener('click', function() {
+        console.log('Theme toggle clicked');
+        const currentIsDarkTheme = body.classList.contains('dark-theme');
+        const newIsDarkTheme = !currentIsDarkTheme;
+        
+        console.log('Current theme is dark:', currentIsDarkTheme);
+        console.log('Switching to dark theme:', newIsDarkTheme);
+        
+        if (newIsDarkTheme) {
+            body.classList.add('dark-theme');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            console.log('Dark theme activated');
             
-            if (newIsDarkTheme) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('theme', 'dark');
-                console.log('Dark theme activated');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('theme', 'light');
-                console.log('Light theme activated');
-            }
+            // Принудительно применяем стили темной темы
+            document.body.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+            document.body.style.color = '#e8e8e8';
+        } else {
+            body.classList.remove('dark-theme');
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            console.log('Light theme activated');
             
-            // Обновляем стили и иконку
-            updateNavbarStyle(newIsDarkTheme);
-            updateThemeIcon(newIsDarkTheme);
-        });
-    } else {
-        console.error('Theme toggle button not found!');
-    }
+            // Принудительно применяем стили светлой темы
+            document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+            document.body.style.color = '#2c3e50';
+        }
+        
+        // Обновляем стили и иконку
+        updateNavbarStyle(newIsDarkTheme);
+        updateThemeIcon(newIsDarkTheme);
+        
+        // Проверяем, что стили применились
+        console.log('Body has dark-theme class:', body.classList.contains('dark-theme'));
+        console.log('Current background:', getComputedStyle(body).background);
+        console.log('Current color:', getComputedStyle(body).color);
+    });
 }
 
 // Инициализация переключения темы при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM content loaded, initializing theme toggle');
+    
+    // Проверяем сохраненную тему перед инициализацией
+    const savedTheme = localStorage.getItem('theme');
+    console.log('Saved theme from localStorage:', savedTheme);
+    
+    // Устанавливаем атрибут data-theme на html элементе
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+    
+    // Инициализируем переключатель темы
     initThemeToggle();
 });
 
