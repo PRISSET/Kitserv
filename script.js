@@ -681,7 +681,6 @@ function initThemeToggle() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         updateNavbarStyle(true);
     } else {
         updateNavbarStyle(false);
@@ -693,10 +692,8 @@ function initThemeToggle() {
         const isDarkTheme = body.classList.contains('dark-theme');
         
         if (isDarkTheme) {
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             localStorage.setItem('theme', 'dark');
         } else {
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             localStorage.setItem('theme', 'light');
         }
         

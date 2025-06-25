@@ -667,6 +667,10 @@ body.dark-theme .footer {
     background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%);
 }
 
+body:not(.dark-theme) .theme-toggle i::before {
+    content: "\f186"; /* moon icon */
+}
+
 body.dark-theme .theme-toggle i::before {
     content: "\f185"; /* sun icon */
 }
