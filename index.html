@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitServ - Продажа котиков</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-cat"></i>
+                <span data-translate="brand">KitServ</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link" data-translate="nav-home">Главная</a>
+                <a href="#cats" class="nav-link" data-translate="nav-cats">Котики</a>
+                <a href="#contact" class="nav-link" data-translate="nav-contact">Контакты</a>
+                <div class="language-selector">
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="de">DE</button>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главная секция -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-translate="hero-title">Найдите своего идеального котика</h1>
+            <p class="hero-subtitle" data-translate="hero-subtitle">Лучшие породистые котята ждут своих новых хозяев</p>
+            <button class="cta-button" onclick="scrollToSection('cats')" data-translate="hero-cta">Посмотреть котиков</button>
+        </div>
+        <div class="hero-animation">
+            <div class="floating-hearts">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция с котиками -->
+    <section id="cats" class="cats-section">
+        <div class="container">
+            <h2 class="section-title" data-translate="cats-title">Наши котики</h2>
+            <div class="cats-grid" id="catsGrid">
+                <!-- Карточки котиков будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для заказа -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 data-translate="order-title">Заказать котика</h3>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="customerName" data-translate="form-name">Ваше имя:</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone" data-translate="form-phone">Номер телефона:</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="telegram" data-translate="form-telegram">Telegram (необязательно):</label>
+                    <input type="text" id="telegram" placeholder="@username">
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp" data-translate="form-whatsapp">WhatsApp (необязательно):</label>
+                    <input type="tel" id="whatsapp" placeholder="+380XXXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label for="selectedCat" data-translate="form-cat">Выбранный котик:</label>
+                    <input type="text" id="selectedCat" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="message" data-translate="form-message">Дополнительное сообщение:</label>
+                    <textarea id="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn" data-translate="form-submit">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Контакты -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title" data-translate="contact-title">Свяжитесь с нами</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span data-translate="contact-phone">Телефон: +380 95 472 71 64</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate="footer-text">&copy; 2024 KitServ. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
