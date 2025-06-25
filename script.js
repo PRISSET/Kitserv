@@ -653,7 +653,6 @@ function preloadImages() {
 // Функциональность переключения темы
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle ? themeToggle.querySelector('i') : null;
     const body = document.body;
     const navbar = document.querySelector('.navbar');
     
@@ -680,14 +679,12 @@ function initThemeToggle() {
     
     // Функция для обновления иконки темы
     function updateThemeIcon(isDarkTheme) {
-        if (!themeIcon) return;
+        if (!themeToggle) return;
         
         if (isDarkTheme) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
+            themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
         } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
+            themeToggle.innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i>';
         }
     }
     
